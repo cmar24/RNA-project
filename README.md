@@ -10,7 +10,15 @@ The repository contains three Python scripts to:
 
 ## Install dependencies
 
+## Data
+The project includes a set of data to allow the training process. The data was downloaded at https://www.rcsb.org/search/advanced where I performed an advanced search with the following criteria:
+- Polymer Entity Type is RNA
+- Experimental Methos is X-Ray Diffraction
+
+Then I downloaded the first 200 files.
+
 ## Files and directories
+
 
 ## Usage
 
