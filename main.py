@@ -8,6 +8,7 @@ Created on Fri Sep 2024
 import math
 import numpy as np
 from collections import defaultdict
+import os
 
 # Import the required functions from other scripts
 from training import compute_distances, update_counts, compute_frequencies, compute_scores, save_scores
@@ -29,9 +30,6 @@ if __name__ == "__main__":
     for base1, base2, distance in compute_distances(c3_atoms):
         update_counts(base1, base2, distance)
         total_distances += 1
-        # Print progress every 1000 calculations
-        if total_distances % 1000 == 0:
-            print(f"Processed {total_distances} distances...")
 
     print(f"Distance calculations complete. Total distances processed: {total_distances}")
 
@@ -46,13 +44,18 @@ if __name__ == "__main__":
     print("Training complete. Scoring files saved.")
 
     # Directory containing the score files
-    score_directory = "data/output" 
-    output_image = "interaction_profiles.png"  
+    score_directory = "data/output"
+    plot_output_dir = "output/plots"  # Directory to save plots
+    
+    # Create the output directory if it doesn't exist
+    os.makedirs(plot_output_dir, exist_ok=True)
     
     # Read scores and create a DataFrame
+    print(f"Reading scores from {score_directory}...")
     scores_df = read_scores(score_directory)
     
     # Plot interaction profiles
-    plot_interaction_profiles(scores_df, output_image)
+    print("Generating and saving plots...")
+    plot_interaction_profiles(scores_df, plot_output_dir)
     
-    print(f"Plot saved to: {output_image}")
+    print(f"All plots saved in: {plot_output_dir}")

@@ -29,24 +29,46 @@ def read_scores(directory):
     # Combine all DataFrames into one
     return pd.concat(all_scores, ignore_index=True)
 
-def plot_interaction_profiles(scores_df, output_file):
+def plot_interaction_profiles(scores_df, output_dir):
     """
-    Plots interaction profiles (score vs. distance) for all base pairs in the data.
+    Plots interaction profiles (score vs. distance) for all base pairs.
+    Saves a general plot and individual plots for each base pair.
     """
-    plt.figure(figsize=(10, 6))
+    # Ensure the output directory exists
+    os.makedirs(output_dir, exist_ok=True)
     
-    # Plot each base pair's scores
+    # General Plot: All base pairs
+    print("Generating general interaction profile plot...")
+    plt.figure(figsize=(10, 6))
     for base_pair, group in scores_df.groupby("Base_Pair"):
         plt.plot(group["Distance_Bin"], group["Score"], label=base_pair, linewidth=2)
     
-    # Customize the plot
     plt.title("Interaction Profiles: Score vs Distance", fontsize=16)
     plt.xlabel("Distance (Å)", fontsize=14)
     plt.ylabel("Score", fontsize=14)
     plt.legend(title="Base Pair", fontsize=12)
     plt.grid(True, linestyle="--", alpha=0.6)
     plt.tight_layout()
+    general_plot_path = os.path.join(output_dir, "general_interaction_profile.png")
+    plt.savefig(general_plot_path, dpi=300)
+    plt.close()
+    print(f"General plot saved to {general_plot_path}")
     
-    # Save the plot as an image file
-    plt.savefig(output_file, dpi=300)
-    plt.show()
+    # Individual Plots: One per base pair
+    print("Generating individual plots for each base pair...")
+    for base_pair, group in scores_df.groupby("Base_Pair"):
+        plt.figure(figsize=(8, 5))
+        plt.plot(group["Distance_Bin"], group["Score"], label=base_pair, color="b", linewidth=2)
+        
+        plt.title(f"Interaction Profile: {base_pair}", fontsize=16)
+        plt.xlabel("Distance (Å)", fontsize=14)
+        plt.ylabel("Score", fontsize=14)
+        plt.legend(fontsize=12)
+        plt.grid(True, linestyle="--", alpha=0.6)
+        plt.tight_layout()
+        
+        # Save the individual plot
+        individual_plot_path = os.path.join(output_dir, f"{base_pair}_interaction_profile.png")
+        plt.savefig(individual_plot_path, dpi=300)
+        plt.close()
+        print(f"Plot for {base_pair} saved to {individual_plot_path}")

@@ -5,7 +5,7 @@ from collections import defaultdict
 from utils.pdb_processing import read_c3_pdb_file
 
 # Define constants
-BASE_PAIRS = ["AA", "AU", "AC", "AG", "UU", "UC", "UG", "CC", "CG", "GG"]
+BASE_PAIRS = ["AA", "AU", "AC", "AG", "UU", "CU", "GU", "CC", "CG", "GG"]
 DISTANCE_BINS = np.linspace(0, 20, 21)  # 20 intervals between 0 and 20 Å
 MAX_SCORE = 10
 
@@ -14,11 +14,11 @@ observed_counts = {bp: np.zeros(len(DISTANCE_BINS) - 1) for bp in BASE_PAIRS}
 reference_counts = np.zeros(len(DISTANCE_BINS) - 1)
 
 def compute_distances(c3_atoms):
-    """Compute distances between residues separated by 4+ positions."""
+    """Compute distances between residues separated by at least 3 positions (i and i+4, i and i+5 ...)."""
     n = len(c3_atoms)
     for i in range(n):
         for j in range(i + 4, n):
-            if c3_atoms[i][4] == c3_atoms[j][4]:  # Same chain
+            if c3_atoms[i][4] == c3_atoms[j][4]:  # Check atoms are in the same chain
                 res1, res2 = c3_atoms[i], c3_atoms[j]
                 distance = math.sqrt((res1[1]-res2[1])**2 + (res1[2]-res2[2])**2 + (res1[3]-res2[3])**2)
                 yield res1[0], res2[0], distance
@@ -53,12 +53,13 @@ def compute_scores(observed_freqs, reference_freqs):
     for bp, obs_freq in observed_freqs.items():
         # Replace zeros in observed frequencies with a small positive value
         safe_obs_freq = np.where(obs_freq > 0, obs_freq, 1e-10)
-        # Compute scores safely
+        # Compute scores 
         scores[bp] = -np.log(
             np.divide(safe_obs_freq, safe_reference_freqs)
         )
         # Cap scores at MAX_SCORE
         scores[bp] = np.clip(scores[bp], None, MAX_SCORE)
+        print(scores)
     return scores
 
 def save_scores(scores, output_dir="data/output"):
