@@ -59,3 +59,10 @@ if __name__ == "__main__":
     plot_interaction_profiles(scores_df, plot_output_dir)
     
     print(f"All plots saved in: {plot_output_dir}")
+
+    # Ask for PDB file input
+    pdb_file = input("Enter the path to the predicted RNA structure PDB file: ")
+    if os.path.exists(pdb_file):
+        evaluate_structure(pdb_file)
+    else:
+        print("Error: File not found.")
