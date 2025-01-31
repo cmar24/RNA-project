@@ -28,7 +28,6 @@ https://www.rcsb.org/search/advanced
 Save the downloaded files into a directory (e.g., data/pdb_files), which will be used for training the objective function.
 
 ## Usage
-1. Training the Objective Function
 Run the `main.py` script to process the PDB files, compute distance distributions, and train the objective function:
 
 ```bash
