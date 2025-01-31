@@ -46,3 +46,5 @@ To evaluate the objective function on predicted RNA structures, you can use data
 An open competition that provides RNA structure predictions and their experimentally determined counterparts for benchmarking.
 - CASP (Critical Assessment of Structure Prediction): CASP Website.
 A similar competition focused on protein structure predictions but with some RNA challenges.
+
+I went to the second website and downloaded a set of RNA predictions from CAP15 to evaluate them (included in the repository).

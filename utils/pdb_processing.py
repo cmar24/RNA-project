@@ -42,7 +42,7 @@ def read_compressed_pdb_file(filepath, atom_name="C3'"):
         print(f"Error reading file {filepath}: {e}")
     return c3_atoms
 
-def read_c3_pdb_file(atom_name="C3'"):
+def read_c3_pdb_file(filename, atom_name="C3'"):
     """
     Reads a PDB file and extracts information for the specified atom type (default: C3').
 
@@ -53,10 +53,6 @@ def read_c3_pdb_file(atom_name="C3'"):
         - x, y, z (float): Coordinates of the atom
         - chain_id (str): Chain identifier
     """
-    # Ask the user for the PDB filename
-    filename = input("Please enter the PDB filename: ")
-
-    # List to store extracted atom information
     c3_atoms = []
 
     try:

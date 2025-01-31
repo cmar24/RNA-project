@@ -14,6 +14,7 @@ import os
 from training import compute_distances, update_counts, compute_frequencies, compute_scores, save_scores
 from utils.pdb_processing import process_directory
 from scoring import  read_scores, plot_interaction_profiles
+from evaluation import load_scores, interpolate_score, evaluate_structure
 
 if __name__ == "__main__":
     # Directory containing PDB files
