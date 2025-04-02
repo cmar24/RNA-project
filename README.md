@@ -47,3 +47,6 @@ An open competition that provides RNA structure predictions and their experiment
 A similar competition focused on protein structure predictions but with some RNA challenges.
 
 I went to the second website and downloaded a set of RNA predictions from CAP15 to evaluate them (included in the repository).
+
+## Contact
+Cristina MARIANINI - cristina.mr.2001@gmail.com
